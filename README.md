@@ -14,6 +14,7 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ![SPIF_Scope_Model_05_A2](SPIF_Scope_Model_05_A2.jpg)
 
+![SPIF_Scope_Model_06_A3](SPIF_Scope_Model_06_A3.jpg)
 
 ## Data Model
 
