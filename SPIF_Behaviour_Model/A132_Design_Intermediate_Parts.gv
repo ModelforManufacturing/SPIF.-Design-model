@@ -1,0 +1,59 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A132 Design Intermediate Parts"
+
+# task definition
+node [shape=box, style="filled, rounded", fillcolor=red, color=black]
+Start
+t1 [label="Design the part\nto be produced\nin each stage"]
+t2 [label="Model intermediate parts"]
+End
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=green, color=black]
+cad [label="CAD System"]
+
+# rules
+node [shape=box, style=filled, fillcolor=yellow, color=black]
+r1 [label="Design parts from\nits defined\ngeometric parameters"]
+r2 [label="Into the assembly 3D model\ntogether blank and final part"]
+
+# task sequence
+edge [dir=forward, color=red, fontcolor=red, style=solid]
+Start -> t1
+t1 -> t2 [label="sketch"]
+t2 -> End
+
+# attaching mechanisms
+edge [dir=forward, color=black]
+cad -> t2
+
+# attaching rules
+edge [dir=forward, color=black, fontcolor=black, style=dotted]
+t1 -> r1
+t2 -> r2
+
+
+# input and output definition
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+issues [label="Part Issues"]
+tool [label="Forming Tool\nDefinition"]
+blank [label="Blank\nDefinition"]
+part [label="Part Model"]
+stages [label="Forming Stages"]
+models [label="Intermediate Part Models"]
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, style=solid]
+issues -> {t1 t2}
+stages -> t1 [label="geom_param"]
+tool -> t2 [label="R"]
+blank -> t2 [label="d0"]
+part -> t2 [label="3D model"]
+t2 -> models [label="3D model"]
+
+}
+

@@ -24,5 +24,22 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ## Behaviour Model
 
-![SPIF_Behaviour_Model](SPIF_Behaviour_Model.png)
+![SPIF_Behaviour_Model](SPIF_Behaviour_Model/general_view.png)
+
+![SPIF_Behaviour_Model_legend](SPIF_Behaviour_Model/legend.gv.png)
+
+![SPIF_Behaviour_Model_A11](SPIF_Behaviour_Model/A11_Define_Blank_and_Tools.gv.png)
+
+![SPIF_Behaviour_Model_A12](SPIF_Behaviour_Model/A12_Define_Forming_Tool.gv.png)
+
+![SPIF_Behaviour_Model_A131](SPIF_Behaviour_Model/A131_Define_Forming_Stages.gv.png)
+
+![SPIF_Behaviour_Model_A132](SPIF_Behaviour_Model/A132_Design_Intermediate_Parts.gv.png)
+
+![SPIF_Behaviour_Model_A14](SPIF_Behaviour_Model/A14_Simulate_and_Generate_NC.gv.png)
+
+![SPIF_Behaviour_Model_A21](SPIF_Behaviour_Model/A21_Extract_Tool_Trajectory.gv.png)
+
+![SPIF_Behaviour_Model_A3](SPIF_Behaviour_Model/A3_Manufacture_and_inspect_part.gv.png)
+
 

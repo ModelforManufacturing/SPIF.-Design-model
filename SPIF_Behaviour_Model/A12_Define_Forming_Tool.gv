@@ -1,0 +1,69 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A12 Define Forming Tool"
+
+# task definition
+node [shape=box, style="filled, rounded", fillcolor=red, color=black]
+Start
+t1 [label="Define FORMING TOOL radius"]
+t2 [label="Define FORMING TOOL height"]
+t3 [label="Draw FORMING TOOL"]
+End
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=green, color=black]
+cad [label="CAD System"]
+
+# rules
+node [shape=box, style=filled, fillcolor=yellow, color=black]
+r1 [label="Set R value"]
+r2 [label="Set h_tool value"]
+r3 [label="Draw the 3D model"]
+
+# task sequence
+edge [dir=forward, color=red, style=solid]
+Start -> {t1 t2} -> t3 -> End
+
+# attaching mechanisms
+edge [dir=forward, color=black]
+cad -> t3
+
+# attaching rules
+edge [dir=forward, color=black, style=dotted]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+
+
+# input and output definition
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+part [label="Part Model"]
+issues [label="Part Issues"]
+nc_issues [label="NC Program Issues"]
+tool [label="Forming Tool Definition"]
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, style=solid]
+part -> t2 [label="flange height"]
+issues -> t1 [label="material failure"]
+nc_issues -> t2 [label="collision"]
+t1 -> tool [label="R"]
+t2 -> tool [label="h_tool"]
+t3 -> tool [label="3D model"]
+
+
+# constraint definition
+node [shape=parallelogram, style=filled, fillcolor=cyan, color=black]
+radius [label="R_min < R < R_max"]
+height [label="h_tool > h_min"]
+
+# attaching constraints
+edge [dir=none, color=black, style=dashed]
+issues -> radius -> r1
+nc_issues -> height -> r2
+
+}
+
