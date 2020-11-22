@@ -5,23 +5,36 @@ digraph behaviourmodel {
 labelloc="t"
 label="A12 Define Forming Tool"
 
-# task definition
-node [shape=box, style="filled, rounded", fillcolor=red, color=black]
-Start
-t1 [label="Define FORMING TOOL radius"]
-t2 [label="Define FORMING TOOL height"]
-t3 [label="Draw FORMING TOOL"]
-End
+# inputs and outputs
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+part [label="Part Model"]
+issues [label="Part Issues"]
+nc_issues [label="NC Program\nIssues"]
+tool [label="Forming Tool\nDefinition"]
 
 # mechanisms
 node [shape=box, style=filled, fillcolor=green, color=black]
 cad [label="CAD System"]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=red, color=black]
+Start
+t1 [label="Define FORMING\nTOOL radius"]
+t2 [label="Define FORMING\nTOOL height"]
+t3 [label="Draw\nFORMING TOOL"]
+End
 
 # rules
 node [shape=box, style=filled, fillcolor=yellow, color=black]
 r1 [label="Set R value"]
 r2 [label="Set h_tool value"]
 r3 [label="Draw the 3D model"]
+
+# attaching rules
+edge [dir=forward, color=black, fontcolor=black, style=dotted]
+t1 -> r1
+t2 -> r2
+t3 -> r3
 
 # task sequence
 edge [dir=forward, color=red, style=solid]
@@ -31,31 +44,16 @@ Start -> {t1 t2} -> t3 -> End
 edge [dir=forward, color=black]
 cad -> t3
 
-# attaching rules
-edge [dir=forward, color=black, style=dotted]
-t1 -> r1
-t2 -> r2
-t3 -> r3
-
-
-# input and output definition
-node [shape=ellipse, style=filled, fillcolor=white, color=black]
-part [label="Part Model"]
-issues [label="Part Issues"]
-nc_issues [label="NC Program Issues"]
-tool [label="Forming Tool Definition"]
-
 # attaching inputs and outputs
 edge [dir=forward, color=black, style=solid]
-part -> t2 [label="flange height"]
-issues -> t1 [label="material failure"]
+part -> t2 [label="flange\nheight"]
+issues -> t1 [label="material\nfailure"]
 nc_issues -> t2 [label="collision"]
 t1 -> tool [label="R"]
 t2 -> tool [label="h_tool"]
 t3 -> tool [label="3D model"]
 
-
-# constraint definition
+# constraints
 node [shape=parallelogram, style=filled, fillcolor=cyan, color=black]
 radius [label="R_min < R < R_max"]
 height [label="h_tool > h_min"]

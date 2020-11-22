@@ -24,22 +24,34 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ## Behaviour Model
 
-![SPIF_Behaviour_Model](SPIF_Behaviour_Model/general_view.png)
-
 ![SPIF_Behaviour_Model_legend](SPIF_Behaviour_Model/legend.gv.png)
 
-![SPIF_Behaviour_Model_A11](SPIF_Behaviour_Model/A11_Define_Blank_and_Tools.gv.png)
+![SPIF_Behaviour_Model_01_A11](SPIF_Behaviour_Model/SPIF_Behaviour_Model_01_A11.gv.png)
 
-![SPIF_Behaviour_Model_A12](SPIF_Behaviour_Model/A12_Define_Forming_Tool.gv.png)
+![SPIF_Behaviour_Model_02_A12](SPIF_Behaviour_Model/SPIF_Behaviour_Model_02_A12.gv.png)
 
-![SPIF_Behaviour_Model_A131](SPIF_Behaviour_Model/A131_Define_Forming_Stages.gv.png)
+![SPIF_Behaviour_Model_03_A131](SPIF_Behaviour_Model/SPIF_Behaviour_Model_03_A131.gv.png)
 
-![SPIF_Behaviour_Model_A132](SPIF_Behaviour_Model/A132_Design_Intermediate_Parts.gv.png)
+![SPIF_Behaviour_Model_04_A132](SPIF_Behaviour_Model/SPIF_Behaviour_Model_04_A132.gv.png)
 
-![SPIF_Behaviour_Model_A14](SPIF_Behaviour_Model/A14_Simulate_and_Generate_NC.gv.png)
+![SPIF_Behaviour_Model_05_A133](SPIF_Behaviour_Model/SPIF_Behaviour_Model_05_A133.gv.png)
 
-![SPIF_Behaviour_Model_A21](SPIF_Behaviour_Model/A21_Extract_Tool_Trajectory.gv.png)
+![SPIF_Behaviour_Model_06_A14](SPIF_Behaviour_Model/SPIF_Behaviour_Model_06_A14.gv.png)
 
-![SPIF_Behaviour_Model_A3](SPIF_Behaviour_Model/A3_Manufacture_and_inspect_part.gv.png)
+![SPIF_Behaviour_Model_07_A21](SPIF_Behaviour_Model/SPIF_Behaviour_Model_07_A21.gv.png)
+
+![SPIF_Behaviour_Model_08_A22](SPIF_Behaviour_Model/SPIF_Behaviour_Model_08_A22.gv.png)
+
+![SPIF_Behaviour_Model_09_A23](SPIF_Behaviour_Model/SPIF_Behaviour_Model_09_A23.gv.png)
+
+![SPIF_Behaviour_Model_10_A31](SPIF_Behaviour_Model/SPIF_Behaviour_Model_10_A31.gv.png)
+
+![SPIF_Behaviour_Model_11_A32](SPIF_Behaviour_Model/SPIF_Behaviour_Model_11_A32.gv.png)
+
+![SPIF_Behaviour_Model_12_A33](SPIF_Behaviour_Model/SPIF_Behaviour_Model_12_A33.gv.png)
+
+## Overview and required changes to Scope & Data Models
+
+![SPIF_Behaviour_Model_overview](SPIF_Behaviour_Model/overview.png)
 
 

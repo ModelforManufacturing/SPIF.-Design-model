@@ -5,21 +5,34 @@ digraph behaviourmodel {
 labelloc="t"
 label="A14 Simulate and Generate NC"
 
-# task definition
+# inputs and outputs
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+cnc [label="SPIF CNC Model"]
+setup [label="SPIF Setup Definition"]
+inter [label="Intermediate Part Models"]
+program [label="NC Program"]
+nc_issues [label="NC Program Issues"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=green, color=black]
+cam [label="CAD/CAM System"]
+
+# tasks definition
 node [shape=box, style="filled, rounded", fillcolor=red, color=black]
 Start
 t1 [label="Simulate CNC model"]
 t2 [label="Generate NC code"]
 End
 
-# mechanisms
-node [shape=box, style=filled, fillcolor=green, color=black]
-cam [label="CAD/CAM System"]
-
 # rules
 node [shape=box, style=filled, fillcolor=yellow, color=black]
 r1 [label="Analyse tool trajectory and\ndetect posible collision"]
 r2 [label="Generate the G-code\nfor the machine tool"]
+
+# attaching rules
+edge [dir=forward, color=black, fontcolor=black, style=dotted]
+t1 -> r1
+t2 -> r2
 
 # task sequence
 edge [dir=forward, color=red, style=solid]
@@ -29,21 +42,6 @@ Start -> t1 -> t2 -> End
 edge [dir=forward, color=black]
 cam -> {t1 t2}
 
-# attaching rules
-edge [dir=forward, color=black, style=dotted]
-t1 -> r1
-t2 -> r2
-
-
-# input and output definition
-node [shape=ellipse, style=filled, fillcolor=white, color=black]
-cnc [label="SPIF CNC Model"]
-setup [label="SPIF Setup Definition"]
-inter [label="Intermediate Part Models"]
-program [label="NC Program"]
-docum [label="Technical Documentation"]
-nc_issues [label="NC Program Issues"]
-
 # attaching inputs and outputs
 edge [dir=forward, color=black, style=solid]
 cnc -> {t1 t2} [label="tool path"]
@@ -51,8 +49,6 @@ setup -> t1 [label="3D model"]
 inter -> t1 [label="3D model"]
 t1 -> nc_issues [label="collision"]
 t2 -> program [label="G-code"]
-t2 -> docum
-
 
 }
 
