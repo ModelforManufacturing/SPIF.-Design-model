@@ -54,4 +54,9 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ![SPIF_Behaviour_Model_overview](SPIF_Behaviour_Model/overview.png)
 
+## Meta-Model
+
+![meta-model_overview](meta-model/metamodel_overview.png)
+
+![meta-model_overview_groups](meta-model/metamodel_overview_groups.png)
 
