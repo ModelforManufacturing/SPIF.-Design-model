@@ -56,7 +56,59 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ## Meta-Model
 
-![meta-model_overview](meta-model/metamodel_overview.png)
+![meta-model](meta-model/metamodel.png)
 
-![meta-model_overview_groups](meta-model/metamodel_overview_groups.png)
+- All classes inherit from the AbstractCommonAtributes class in the 'mfm' (model lifecycle management) package, which contains a series of attributes for managing the model lifecycle.
+
+![meta-model_mlm](meta-model/mlm.png)
+
+- Classes are divided into 'scope', 'data' and 'behavior' packages. A fourth 'semantic' package will be added in the future.
+- Some classes have relationships with themselves: Activity, Means, DataObject, ActivityDataRelation, Task. To model these relationships, abstract classes ('interface') have been used that generalize the previous ones: AbstractActivity, AbstractMeans, AbstractDataObject, AbstractActivityDataRelation, AbstractTask.
+
+
+### Meta-Model: Scope Model
+
+![meta-model_scope](meta-model/scope.png)
+
+- The root class is ScopeModel, which is composed of a ScopeDiagram that is composed of a main 'rootActivity' activity of type AbstractActivity.
+- The important concepts of the Scope Model are the activities (Activity), the resources or means for their realization (Means) and the objects required and produced by the activity (DataObject, modeled in the data package), as well as the relationships between them.
+- Activities are modeled with the AbstractActivity and Activity classes, where the first is an abstract generalization of the second.
+- The sequence of activities is modeled by the relationship between AbstractActivity and Activity, through the roles 'prevActivity' and 'nextActivity'.
+- An Activity can be a ComposedActivity (which is decomposed into other subactivities, with 'activityParent' and 'activityChild' roles) or an ElementalActivity (without children). The latter is used in the 'behavior' package.
+- The resources to carry out the activities are modeled with the AbstractMeans and Means classes.
+- Sometimes, the resources that are used in sub-activities can be packaged in a single resource, easier to associate with the parent activity (for example, “CAX” to package “CAD”, “CAD / CAM” and “CAPP” systems) . This possibility has been modeled with the aggregation relationship between Means ('bundledMeans' role) and AbstractMeans ('means' role).
+- The data objects to be used in the activities are modeled with the AbstractDataObject and DataObject classes. (Note: these classes are valid in IDEF0 for inputs, outputs and controllers.)
+- Similar to resources, data objects can be related to each other by aggregation relationships ('dataObjectParent' and 'dataObjectChild' roles).
+- The relationship between Activity and Means is simple and direct.
+- Instead, the relationship between Activity and DataObject is more complex and has been modeled through the ActivityDataRelation class, which inherits from AbstractActivityDataRelation (it is also used in the 'behavior' package).
+- AbstractActivityDataRelation has two boolean attributes: 'dataRequired' (true for IDEF0 inputs and controllers) and 'dataProduced' (true for outputs).
+
+### Meta-Model: Data Model
+
+![meta-model_data](meta-model/data.png)
+
+- The root class is DataModel, which is composed of a DataDiagram that is composed of one or more DataObjects.
+- The important concepts of the Data Model are the data objects and their properties, as well as the relationships between them.
+- Property has two attributes of type string ('dataType', 'value') for primitive data types like (integer, 8) or (float, 8.0) or for classes and objects like (Material, AA7075).
+- Data objects can be related to each other through the DataObjectRelation class, which is used to specify what type of relationship exists between both objects.
+
+### Meta-Model: Behaviour Model
+
+![meta-model_behaviour](meta-model/behaviour.png)
+
+- The root class is BehaviorModel, which is composed of a BehaviorDiagram that is composed of all the ElementalActivity of the Scope Model.
+- The important concepts of the Behavior Model are the tasks that allow an elementary activity to be carried out, the rules associated with the tasks and their possible constraints and the data objects required or produced, as well as the relationships between them.
+- An ElementalActivity (from the 'scope' package) adds at least one Task.
+- Each Means of the ElementalActivity (see 'scope' package) can be assigned to several Tasks.
+- Tasks are modeled with the AbstractTask and Task classes.
+- Two tasks can be performed consecutively ('prevTask' and 'nextTask' roles).
+- The procedure to perform a Task is modeled with the Rule class. Each Task has its Rule.
+- All the data objects associated with the ElementalActivity (see 'scope' package) are now assigned to the Tasks. It can be done in two ways.
+- The first way is identical to how it is done with the ActivityDataRelation class (see 'scope' package), substituting the ElementalActivity for the Task. This form simply specifies which task in the elementary activity each data object uses.
+- The second way is by using the TaskDataRelation class to relate the Task to a Property of the data object. This form adds more information than the previous one.
+- The two classes ActivityDataRelation and TaskDataRelation inherit the 'dataRequired' and 'dataProduced' attributes from the AbstractActivityDataRelation class.
+- Una Rule puede tener varias Constraint.
+- Una Constraint está asociada a una Property de un objeto de datos.
+- A Rule can have several Constraint.
+- A Constraint is associated with a Property of a data object.
 
