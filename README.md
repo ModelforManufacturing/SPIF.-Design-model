@@ -70,8 +70,9 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ![metamodel_scope](metamodel/semantic.png)
 
-- In this preliminary approach, the Semantic Model has been modelled just as two common attributes 'name' and 'description' for all classes in 'scope', 'data' and 'behaviour' packages.
-- Thus, the class AbstractSemanticAttributes with both attributes is inherited by the rest of classes.
+- In this preliminary approach, the Semantic Model has been modelled just as 3 common attributes 'name', 'shortName' and 'description' for all classes in 'scope', 'data' and 'behaviour' packages.
+- The idea behind this solution is based on having a detailed description of all the ontology concepts for the future construction of interfaces without doubts about semantics.
+- The 3 attributes are defined in the class AbstractSemanticAttributes which is inherited by the rest of classes.
 
 ### Metamodel: Scope Model
 
