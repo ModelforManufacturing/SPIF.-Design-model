@@ -78,7 +78,7 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ![metamodel_scope](metamodel/scope.png)
 
-- The root class is ScopeModel, which is composed of a ScopeDiagram that is composed of a main 'rootActivity' activity of type AbstractActivity.
+- The root class is ScopeModel, which is composed of a main 'rootActivity' (class Activity).
 - The important concepts of the Scope Model are the activities (Activity), the resources or means for their realization (Means) and the objects required and produced by the activity (DataObject, modeled in the data package), as well as the relationships between them.
 - Activities are modeled with the AbstractActivity and Activity classes, where the first is an abstract generalization of the second.
 - The sequence of activities is modeled by the relationship between AbstractActivity and Activity, through the roles 'prevActivity' and 'nextActivity'.
@@ -95,7 +95,7 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ![metamodel_data](metamodel/data.png)
 
-- The root class is DataModel, which is composed of a DataDiagram that is composed of one or more DataObjects.
+- The root class is DataModel, which is composed of one or more DataObject.
 - The important concepts of the Data Model are the data objects and their properties, as well as the relationships between them.
 - Property has two attributes of type string ('dataType', 'value') for primitive data types like (integer, 8) or (float, 8.0) or for classes and objects like (Material, AA7075).
 - Data objects can be related to each other through the DataObjectRelation class, which is used to specify what type of relationship exists between both objects.
@@ -104,7 +104,7 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ![metamodel_behaviour](metamodel/behaviour.png)
 
-- The root class is BehaviorModel, which is composed of a BehaviorDiagram that is composed of all the ElementalActivity of the Scope Model.
+- The root class is BehaviorModel, which is composed of all the ElementalActivity defined in the Scope Model.
 - The important concepts of the Behavior Model are the tasks that allow an elementary activity to be carried out, the rules associated with the tasks and their possible constraints and the data objects required or produced, as well as the relationships between them.
 - An ElementalActivity (from the 'scope' package) adds at least one Task.
 - Each Means of the ElementalActivity (see 'scope' package) can be assigned to several Tasks.
