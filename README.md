@@ -118,3 +118,7 @@ Design and extension model for Single Point Incremental Forming - SPIF
 - A Rule can have several Constraint.
 - A Constraint is associated with a Property of a data object.
 
+### Metamodel: overview
+
+![metamodel_behaviour](metamodel/overview.png)
+
