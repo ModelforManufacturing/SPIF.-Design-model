@@ -1,0 +1,59 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A23 Run and Analyse FEM"
+
+# inputs and outputs
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+fem [label="SPIF\nNumerical\nModel"]
+fem_issues [label="FEM Simulation Issues"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=green, color=black]
+fea [label="FEA System"]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=red, color=black]
+Start
+t1 [label="Solve the FEM"]
+t2 [label="Analyse results for a stage"]
+t3 [label="Report issues"]
+t4 [label="Validate FEA"]
+End
+
+# rules
+node [shape=box, style=filled, fillcolor=yellow, color=black]
+r1 [label="Create and run\na FEA 'job'"]
+r2 [label="Simulate the results\nfor a forming stage\n(following the manufacturing process)\nand evaluate failure risk"]
+r3 [label="Report simulation\nissues for the stage"]
+r4 [label="Validate simulation\nfor full process"]
+
+# attaching rules
+edge [dir=forward, color=black, fontcolor=black, style=dotted]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+t4 -> r4
+
+# task sequence
+edge [dir=forward, color=red, fontcolor=red, style=solid]
+Start -> t1
+t1 -> t2 [label="simulation\nresults"]
+t2 -> t2 [label="next stage"]
+t2 -> t3 [label="failure\nrisk"]
+t2 -> t4 [label="successful\nsimulation"]
+{t3, t4} -> End
+
+# attaching mechanisms
+edge [dir=forward, color=black]
+fea -> {t1, t2}
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, fontcolor=black, style=solid]
+fem -> t1
+t3 -> fem_issues [label="stage, failure type"]
+
+}
+

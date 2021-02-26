@@ -1,0 +1,75 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A22 Define FEM"
+
+# inputs and outputs
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+path [label="Tool Trayectory"]
+stages [label="Forming Stages"]
+raw [label="Raw Material"]
+setup [label="SPIF Setup Definition"]
+fem [label="SPIF Numerical Model"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=green, color=black]
+fea [label="FEA System"]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=red, color=black]
+Start
+t1 [label="Model deformable part"]
+t2 [label="Model assembly"]
+t3 [label="Model interactions"]
+t4 [label="Mesh parts"]
+t5 [label="Define steps"]
+t6 [label="Model boundary conditions"]
+End
+
+# rules
+node [shape=box, style=filled, fillcolor=yellow, color=black]
+r1 [label="Configure the\nelastic-plastic properties\nfor the raw material"]
+r2 [label="Configure tools\nas rigid parts and\nassemble the parts set"]
+r3 [label="Define the\ncontact conditions\nbetween parts"]
+r4 [label="Define the mesh\n(element type and size)\nfor the raw material\n(and the discrete\nrigid parts if any)"]
+r5 [label="Configure a process\nstep for every\nforming stage"]
+r6 [label="Encastre the backing plate\nand define the forming tool\nmovement for all stages"]
+
+# attaching rules
+edge [dir=forward, color=black, fontcolor=black, style=dotted]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+t4 -> r4
+t5 -> r5
+t6 -> r6
+
+# task sequence
+edge [dir=forward, color=red, fontcolor=red, style=solid]
+Start -> t1
+t1 -> t2 [label="deformable part"]
+t2 -> t3 [label="assembly"]
+t2 -> t4 [label="parts"]
+Start -> t5
+t2 -> t6 [label="assembly"]
+t3 -> End [label="interactions"]
+t4 -> End [label="mesh"]
+t5 -> t6 [label="steps"]
+t6 -> End [label="boundary\nconditions"]
+
+# attaching mechanisms
+edge [dir=forward, color=black]
+fea -> Start
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, fontcolor=black, style=solid]
+setup -> t1 [label="blank\n3D model"]
+raw -> t1 [label="material\nproperties"]
+setup -> t2 [label="3D model"]
+stages -> t5 [label="n_stages"]
+path -> t6
+End -> fem
+}
+

@@ -1,0 +1,79 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A11 Define Blank and Tools"
+
+# inputs and outputs
+node [shape=ellipse, style=filled, fillcolor=white, color=black]
+part [label="Part Model"]
+issues [label="Part Issues"]
+blank [label="Blank\nDefinition"]
+rig [label="Rig\nDefinition"]
+plate [label="Backing Plate\nDefinition"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=green, color=black]
+cad [label="CAD System"]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=red, color=black]
+Start
+t1 [label="Define\nBLANK thickness"]
+t2 [label="Define BLANK\nhole diameter"]
+t3 [label="Define\nRIG height"]
+t4 [label="Define opening type\nof BACKING PLATE"]
+t5 [label="Draw BLANK sheet and TOOLS"]
+End
+
+# rules
+node [shape=box, style=filled, fillcolor=yellow, color=black]
+r1 [label="Set t_0\nvalue"]
+r2 [label="Set d_0\nvalue"]
+r3 [label="Set h_rig\nvalue"]
+r4 [label="Set opening =\n{circular, square...}"]
+r5 [label="Draw the 3D model"]
+
+# attaching rules
+edge [dir=forward, color=black, fontcolor=black, style=dotted]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+t4 -> r4
+t5 -> r5
+
+# task sequence
+edge [dir=forward, color=red, style=solid]
+Start -> {t1 t2 t3 t4} -> t5 -> End
+
+# attaching mechanisms
+edge [dir=forward, color=black]
+cad -> t5
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, style=solid]
+part -> t1 [label="flange\nthickness"]
+part -> t2 [label="flange\nheight"]
+part -> t3 [label="flange\nheight"]
+part -> t4 [label="flange\nshape"]
+issues -> t2 [label="d_min"]
+t1 -> blank [label="t0"]
+t2 -> blank [label="d0"]
+t3 -> rig [label="h_rig"]
+t4 -> plate [label="opening"]
+#{blank rig plate} -> t5
+t5 -> {blank rig plate} [label="3D model"]
+
+# constraints
+node [shape=parallelogram, style=filled, fillcolor=cyan, color=black]
+hole [label="d0 >= d_min"]
+height [label="h_rig > flange height"]
+
+# attaching constraints
+edge [dir=none, color=black, style=dashed]
+issues -> hole -> r2
+part -> height -> r3
+
+}
+
