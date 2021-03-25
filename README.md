@@ -20,7 +20,14 @@ Design and extension model for Single Point Incremental Forming - SPIF
 
 ## Data Model
 
+Using CMap Tools:
+
 ![SPIF_Data_Model](SPIF_Data_Model/SPIF_Data_Model.png)
+
+Using Graphviz DOT:
+
+![SPIF_Data_Model2](SPIF_Data_Model/SPIF_Data_Model.gv.png)
+
 
 ## Behaviour Model
 

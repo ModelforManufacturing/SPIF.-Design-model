@@ -1,0 +1,90 @@
+digraph datamodel {
+    colorscheme=pastel19
+    node [shape=record, style="filled, rounded", fillcolor=white, color=black]
+
+/* DATA MODEL */
+
+    tested [label="Finished and tested part"]
+    fin_iss [label="Finished part issues"]
+    tested -> fin_iss [label="has no"]
+
+    /* Physical components */
+    subgraph clusterParts {
+        label="Physical components"; style=filled; color=1
+
+        setup [label="SPIF setup definition"]
+        blank [label="Blank definition"]
+        tool [label="Forming tool definition"]
+        tools [label="Tools definition"]
+        raw [label="Raw material"]
+        part_iss [label="Part issues"]
+    }
+    setup -> {blank; tool; tools} [label="defined by"]
+    blank -> raw [label="made of"]
+    setup -> part_iss [label="evaluates"]
+
+    /* NC program */
+    subgraph clusterNC {
+        label="NC program"; style=filled; color=2
+
+        cnc [label="SPIF CNC model"]
+        part [label="Part model"]
+        stages [label="Forming stages"]
+        interm [label="Intermediate part models"]
+        program [label="NC program"]
+        progr_iss [label="NC program issues"]
+    }
+    cnc -> part [label="includes"]
+    cnc -> stages [label="has"]
+    cnc -> program [label="generates"]
+    cnc -> progr_iss [label="evaluates"]
+    stages -> interm [label="requires"]
+
+    /* Numerical simulation */
+    subgraph clustersimulation {
+        label="Numerical simulation"; style=filled; color=3
+
+        fem [label="SPIF numerical model"]
+        fem_iss [label="FEM simulation issues"]
+        path [label="Tool trajectory"]
+    }
+    fem -> path [label="simulates"]
+    fem -> fem_iss [label="evaluates"]
+
+    /* Other relations */
+    tested -> {setup, program} [label="manufactured with"]
+    fin_iss -> {part_iss, progr_iss, fem_iss} [label="can be"]
+
+    setup -> cnc [label="modelled by"]
+    part_iss -> part [label="referred to"]
+
+    cnc -> fem [label="simulated by"]
+    program -> path [label="defines"]
+
+
+/* ENRICH DATA MODEL: NEW OBJECTS AND ATTRIBUTES */
+// node format: "{<class> | <attribute> \l<attribute> \l<attribute> ... \l}"
+
+    node [fillcolor=yellow1]
+
+    /* Physical components */
+    subgraph clusterParts {
+        tool [label="{Forming tool definition | diameter \l length \l}"]
+        raw [label="{Raw material | material \l sheet thickness \l}"]
+
+        holder [label="Blank holder"]
+        plate [label="{Backing plate | opening \l}"]
+        rig [label="{Rig | height \l}"]
+    }
+    tools -> {holder, plate, rig} [label="has"]
+
+    /* NC program */
+    subgraph clusterNC {
+        stages [label="{Forming stages | stage number \l spindle speed \l feedrate \l step size \l}"]
+    }
+
+    /* Numerical simulation */
+    subgraph clustersimulation {
+    }
+}
+
