@@ -84,5 +84,37 @@ digraph datamodel {
     cnc -> fem [label="simulated by"]
     program -> path [label="defines"]
 
+
+/* ENRICH DATA MODEL: NEW OBJECTS AND ATTRIBUTES */
+// node format: "{<class> | <attribute> \l<attribute> \l<attribute> ... \l}"
+
+    node [fillcolor=yellow1]
+
+    /* Mechanical parts */
+    subgraph clusterParts {
+        tool [label="{Forming Tool Definition | diameter \l length \l}"]
+        raw [label="{Raw Material | material \l sheet thickness \l}"]
+
+        machine [label="{NC Machine | Smax \l Fmax \l}"]
+        holder [label="Blank Holder"]
+        plate [label="{Backing Plate | opening \l}"]
+        rig [label="{Rig | height \l}"]
+    }
+    tools -> {holder, plate, rig} [label="has"]
+    setup -> machine [label="defined by"]
+
+    /* NC program */
+    subgraph clusterNC {
+        strategy [label="{SPIF Strategy | ns (number of stages) \l}"]
+        operation [label="{NC Operation | S (spindle speed) \l F (feedrate) \l sd (step down) \l}"]
+        feature [label="Geometric Feature"]
+    }
+    stage -> operation [label="has a sequence of"]
+    operation -> feature [label="produces"]
+    pmodel -> feature [label="has one or more"]
+
+    /* Numerical simulation */
+    subgraph clustersimulation {
+    }
 }
 

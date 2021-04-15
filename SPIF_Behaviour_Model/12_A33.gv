@@ -1,0 +1,62 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A33 Digital Inspection"
+
+# inputs and outputs
+node [shape=box, style=filled, fillcolor=white, color=black]
+model [label="Final Part Model"]
+manufactured [label="Manufactured Part"]
+dig_inspected [label="Digitally\nInspected Part"]
+issues [label="Part Issues"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=white, color=green]
+scanner [label="3D Scanner System"]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=lightblue, color=black]
+Start
+t1 [label="Scan part"]
+t2 [label="Position 3D models"]
+t3 [label="Calculate distances"]
+t4 [label="Evaluate tolerances"]
+End
+
+# rules
+node [shape=box, style="filled, rounded", fillcolor=white, color=blue]
+r1 [label="Scan the manufactured\npart to obtain a\n3D scanning model"]
+r2 [label="Adjust the location\nand orientation of the\n3D models of the\ndesign part and the\nscanned part"]
+r3 [label="Calculate distances\nbetween both 3D models"]
+r4 [label="Evaluate tolerances\nand validate\nor not the part"]
+
+# attaching rules
+edge [dir=none, color=blue, style=dashed]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+t4 -> r4
+
+# task sequence
+edge [dir=forward, color=blue, fontcolor=blue, style=solid]
+Start -> t1
+t1 -> t2 [label="3D scanning\nmodel"]
+t2 -> t3
+t3 -> t4 [label="distances"]
+t4 -> End
+
+# attaching mechanisms
+edge [dir=none, color=green, style=dashed]
+scanner -> Start
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, fontcolor=black, style=solid]
+model -> t2 [label="3D model"]
+model -> t4 [label="tolerances"]
+manufactured -> t1
+t4 -> issues [label="tolerance\nissues"]
+t4 -> dig_inspected [label="part\nvalidated"]
+}
+

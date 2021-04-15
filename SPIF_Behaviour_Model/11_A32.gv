@@ -1,0 +1,65 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A32 Manual Inspection"
+
+# inputs and outputs
+node [shape=box, style=filled, fillcolor=white, color=black]
+model [label="Final Part Model"]
+quality [label="Quality and\nInspection Rules"]
+manufactured [label="Manufactured Part"]
+man_inspected [label="Manually\nInspected Part"]
+issues [label="Part Issues"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=white, color=green]
+measure [label="Measurement Tools"]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=lightblue, color=black]
+Start
+t1 [label="Inspect material failures"]
+t2 [label="Report material failures"]
+t3 [label="Inspect geometry"]
+t4 [label="Evaluate geometry"]
+End
+
+# rules
+node [shape=box, style="filled, rounded", fillcolor=white, color=blue]
+r1 [label="Find material failures\naccording to Quality and\nInspection Rules"]
+r2 [label="Report data\n(zone, stage...)\nfrom material failures"]
+r3 [label="Measure dimensions,\nshape and/or\nsurface roughness\naccording to Quality and\nInspection Rules"]
+r4 [label="Evaluate tolerances\nand validate\nor not the part"]
+
+# attaching rules
+edge [dir=none, color=blue, style=dashed]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+t4 -> r4
+
+# task sequence
+edge [dir=forward, color=blue, fontcolor=blue, style=solid]
+Start -> t1
+t1 -> t2 [label="failure,\nzone,\nstage"]
+t1 -> t3 [label="no failure"]
+t2 -> End
+t3 -> t4 [label="geometrical\nattributes"]
+t4 -> End
+
+# attaching mechanisms
+edge [dir=none, color=green, style=dashed]
+measure -> {t1, t3}
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, fontcolor=black, style=solid]
+model -> t4 [label="tolerances"]
+quality -> {t1, t3}
+manufactured -> {t1, t3}
+t2 -> issues [label="failure\nissues"]
+t4 -> issues [label="tolerance\nissues"]
+t4 -> man_inspected [label="part\nvalidated"]
+}
+

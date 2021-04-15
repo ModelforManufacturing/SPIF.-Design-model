@@ -1,0 +1,72 @@
+digraph behaviourmodel {
+
+
+# activity title
+labelloc="t"
+label="A131 Define Forming Stages"
+
+# inputs and outputs
+node [shape=box, style=filled, fillcolor=white, color=black]
+issues [label="Part Issues"]
+tool [label="Forming Tool\nDefinition"]
+blank [label="Blank\nDefinition"]
+part [label="Final Part Model"]
+strategy [label="SPIF strategy"]
+stages [label="Forming Stages"]
+machine [label="NC Machine"]
+knowledge [label="SPIF Knowledge"]
+
+# mechanisms
+node [shape=box, style=filled, fillcolor=white, color=green]
+
+# tasks definition
+node [shape=box, style="filled, rounded", fillcolor=lightblue, color=black]
+Start
+t1 [label="Choose forming strategy"]
+t2 [label="Define main characteristics\nfor each stage"]
+t3 [label="Estimate number of stages"]
+End
+
+# rules
+node [shape=box, style="filled, rounded", fillcolor=white, color=blue]
+r1 [label="Choose a well-known single-\nor multi-stage strategy\nor proove a new one"]
+r2 [label="Set values for geometric\nparameters, spindle speed,\nfeedrate and step down"]
+r3 [label="From the part geometry\nand the geometric\nparameters of all stages"]
+
+# attaching rules
+edge [dir=none, color=blue, style=dashed]
+t1 -> r1
+t2 -> r2
+t3 -> r3
+
+# task sequence
+edge [dir=forward, color=blue, fontcolor=blue, style=solid]
+Start -> t1
+t1 -> t2
+t2 -> t3 [label="geom_param,\nS, F, sd"]
+t3 -> End
+
+# attaching mechanisms
+edge [dir=none, color=green, style=dashed]
+
+# attaching inputs and outputs
+edge [dir=forward, color=black, fontcolor=black, style=solid]
+knowledge -> {t1 t2 t3}
+t1 -> strategy -> t2
+issues -> {t1 t2 t3}
+tool -> t2 [label="R"]
+blank -> t3 [label="d0"]
+part -> {t1 t3} [label="3D model"]
+t3 -> stages [label="n_stages,\ngeom_param,\nS, F, sd"]
+machine -> t2 [label="Smax,\nFmax"]
+
+# constraints
+node [shape=ellipse, style=filled, fillcolor=white, color=red]
+maxspeeds [label="S < Smax,\nF < Fmax"]
+
+# attaching constraints
+edge [dir=none, color=red, style=dashed]
+machine -> maxspeeds -> r2
+
+}
+
